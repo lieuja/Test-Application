@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Test Application</title>
+
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.9/js/esri/css/esri.css" />
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/claro/claro.css" />
+    <link rel="stylesheet" type="text/css" href="css/styleSheet.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body class="claro">
+    <div id="site" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false">
+        <div id="banner" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, gutters:false, region:'top'">
+            <div id="bannerWrapper">
+                <div id="logo" class="oneline"><img src="images/earthLogo.png"/></div>
+                <div id="bannerTitle"class="oneline">ArcGIS Application</div> 
+                <div id="geocoder"></div>               
+                    <i class="fa fa-filter fa-2x"></i>
+                    <i class="fa fa-print fa-2x"></i>
+                    <i id="changeBasemap" class="fa fa-th fa-2x"></i>
+            </div>
+            
+        </div>
+        <div id="leftPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, gutters:false, region:'leading'">
+            LEFT PANE
+        </div>
+        <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, gutters:false, region:'center'">
+            <div id="mapDiv">
+                <!-- basemap gallery -->
+                <div id="basemapGalleryContainer" style="display:none;">
+                    <div id="basemapInnerContainer">
+                        <div id="basemapGallery"></div>
+                    </div>
+                </div>
+            </div> 
+            
+        </div>
+        <div id="bottomPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, gutters:false, region:'bottom'">
+            
+        </div>
+    </div>
+
+    <script>
+        var dojoConfig = {
+            async: true,
+            parseOnLoad: true,
+            packages: [
+                {
+                    name: "app",
+                    location: location.pathname.replace(/[^\/]+$/, '') + "js/app"
+                }
+            ]
+        };
+    </script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="http://js.arcgis.com/3.9/"></script>
+    <script type="text/javascript">
+        require(["dojo/_base/kernel", "dojo/ready", "app/AppController"], function (kernel, ready, AppController) {
+            ready(function () {
+                console.log("kernel");
+                kernel.global.app = new AppController({});
+                app.init();
+            });
+        });
+    </script>
+</body>
+</html>
