@@ -91,17 +91,57 @@ div.esriGeocoderResults {
 
 #basemapGalleryContainer {
     position:absolute;
-    left:100px;
+    left:30%;
     top: 7px;
     width: 630px;
     height: 950px;
     z-index:99999;
     background-color: #dddddd;
     border-radius: 15px;
+    
+}
+
+.layerContent {
+    margin-bottom:10px;
 }
 
 #basemapInnerContainer {
     margin:15px;
+}
+
+/*legend slide up*/
+#legendDropDown {
+  position:absolute;
+  bottom:0;
+  width: 100%;
+  padding-bottom:2%;
+  z-index: 100;
+}
+#legendOpen {
+    border-radius:5px;
+    background-color:silver;
+  color: #ececec;
+  cursor: pointer;
+  float: left;
+  font-size: 26px;
+  margin: -2px 0 0 10%;
+  padding: 0 15px 2px;
+  text-decoration: none;
+  width: 63px;
+}
+#legendDiv {
+  background:#414142;
+  width:200px;
+  height: 500px;
+  
+  margin: 0;
+  padding: 30px 0;
+}
+#legendDropDown .legendClose {
+  background-image: url(images/close.png);
+}
+#legendDropDown #legendDashboard {
+  display: none;
 }
 
 #banner {
@@ -129,6 +169,7 @@ background-image: linear-gradient(to bottom, #000000 0%, #005E8A 100%);
 }
 
 #leftPane {
+    overflow:hidden;
     width:200px;
     border-right: 2px solid black;
 /* IE10 Consumer Preview */ 

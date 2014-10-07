@@ -1,6 +1,5 @@
 C:\Projects\testApplication\testApplication\bin\testApplication.dll.config
 C:\Projects\testApplication\testApplication\bin\testApplication.dll
 C:\Projects\testApplication\testApplication\bin\testApplication.pdb
-C:\Projects\testApplication\testApplication\obj\Debug\testApplication.csprojResolveAssemblyReference.cache
 C:\Projects\testApplication\testApplication\obj\Debug\testApplication.dll
 C:\Projects\testApplication\testApplication\obj\Debug\testApplication.pdb

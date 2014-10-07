@@ -3,7 +3,9 @@
     "esri/dijit/BasemapGallery",
     "esri/dijit/HomeButton",
     "esri/dijit/Geocoder",
-    "esri/layers/ArcGISDynamicMapServiceLayer",
+    "esri/layers/FeatureLayer",
+    "esri/InfoTemplate",
+    "esri/dijit/Legend",
     "dojo/parser",
     "dojo/dom",
     "dojo/on",
@@ -24,7 +26,9 @@ function (
     BasemapGallery,
     HomeButton,
     Geocoder,
-    ArcGISDynamicMapServiceLayer,
+    FeatureLayer,
+    InfoTemplate,
+    Legend,
     parser,
     dom,
     on,
@@ -47,6 +51,7 @@ function (
             this.createMap();
             this.changeBasemap();
             this.createLayers();
+            this.createLegend();
         },
         createMap: function () {
             var map = new Map("mapDiv", {
@@ -70,8 +75,16 @@ function (
             geocoder.startup();
         },
         changeBasemap: function () {
+            var map = this.map;
+            var basemapGallery = new BasemapGallery({
+                showArcGISBasemaps: true,
+                map: map
+            }, "basemapGallery");
+
+            basemapGallery.startup();
+
             //change basemap tool
-            on(dom.byId("changeBasemap"), "click", function (e) {
+            on(dom.byId("changeBasemap"), "click", lang.hitch(this, function (e) {      
                 if (domStyle.get(dom.byId("basemapGalleryContainer"), "display") === "block") {
 
                     coreFx.wipeOut({
@@ -81,7 +94,6 @@ function (
                     }).play();
                     domStyle.set(dom.byId("basemapGalleryContainer"), "display", "");
                 } else {
-
                     coreFx.wipeIn({
                         node: "basemapGalleryContainer",
                         duration: 800,
@@ -89,17 +101,44 @@ function (
                     }).play();
                     domStyle.set(dom.byId("basemapGalleryContainer"), "display", "block");
                 }
-            });
-            var map = this.map;
-            var basemapGallery = new BasemapGallery({
-                showArcGISBasemaps: true,
-                map: map
-            }, "basemapGallery");
+
+                
+            }));
+            
         },
         createLayers: function () {
             var map = this.map;
-            var layer1 = new ArcGISDynamicMapServiceLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer", { id: "0" });
-            map.addLayer(layer1);
+            var workedGIS = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/0", {infoTemplate: new InfoTemplate("Attributes", "${*}")});
+            var privateSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/1", { infoTemplate: new InfoTemplate("Attributes", "${*}") });
+            var noneProfitSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/2", { infoTemplate: new InfoTemplate("Attributes", "${*}") });
+            var governmentSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/3", { infoTemplate: new InfoTemplate("Attributes", "${*}") });
+            var educationSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/4", { infoTemplate: new InfoTemplate("Attributes", "${*}") });
+            map.addLayer(workedGIS);
+            map.addLayer(privateSector);
+            map.addLayer(noneProfitSector);
+            map.addLayer(governmentSector);
+            map.addLayer(educationSector);
+            workedGIS.show();
+            privateSector.show();
+            noneProfitSector.show();
+            governmentSector.show();
+            educationSector.show();
+        },
+        createLegend: function () {
+            var map = this.map;
+            var legend = new Legend({
+                map: map
+            }, "legendDiv");
+            legend.startup();
+
+            
+            $('#legendOpen').click(function () {
+                $('#legendDropDown #legendDashboard').slideToggle({
+                        direction: "up"
+                    }, 300);
+                $(this).toggleClass('legendClose');
+                }); // end click
+            
         },
     });
 });
