@@ -6,6 +6,7 @@
     "esri/layers/FeatureLayer",
     "esri/InfoTemplate",
     "esri/dijit/Legend",
+    "esri/dijit/Print",
     "dojo/parser",
     "dojo/dom",
     "dojo/on",
@@ -29,6 +30,7 @@ function (
     FeatureLayer,
     InfoTemplate,
     Legend,
+    Print,
     parser,
     dom,
     on,
@@ -52,23 +54,22 @@ function (
             this.changeBasemap();
             this.createLayers();
             this.createLegend();
+            this.print();
         },
         createMap: function () {
             var map = new Map("mapDiv", {
-                center: [-85, 35],
-                zoom: 6,
-                basemap: "streets"
+                center: [-93, 35],
+                zoom: 4,
+                basemap: "hybrid"
             });
             this.map = map;
             var home = new HomeButton({
                 map: map
-            }, "HomeButton");
+            }, "homeButton");
             home.startup();
 
             var geocoder = new Geocoder({
-                arcgisGeocoder: {
-                    placeholder: "find address"
-                },
+                arcgisGeocoder: true,
                 autoComplete: true,
                 map: map,
             }, "geocoder");
@@ -108,21 +109,58 @@ function (
         },
         createLayers: function () {
             var map = this.map;
-            var workedGIS = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/0", {infoTemplate: new InfoTemplate("Attributes", "${*}")});
-            var privateSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/1", { infoTemplate: new InfoTemplate("Attributes", "${*}") });
-            var noneProfitSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/2", { infoTemplate: new InfoTemplate("Attributes", "${*}") });
-            var governmentSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/3", { infoTemplate: new InfoTemplate("Attributes", "${*}") });
-            var educationSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/4", { infoTemplate: new InfoTemplate("Attributes", "${*}") });
-            map.addLayer(workedGIS);
+            var workedGis = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/0", {infoTemplate: new InfoTemplate("Attributes", "${*}"),  visible:false});
+            var privateSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/1", { infoTemplate: new InfoTemplate("Attributes", "${*}"), visible:false});
+            var nonProfitSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/2", { infoTemplate: new InfoTemplate("Attributes", "${*}"), visible: false });
+            var governmentSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/3", { infoTemplate: new InfoTemplate("Attributes", "${*}"), visible: false });
+            var educationSector = new FeatureLayer("http://services.arcgis.com/hH0XfIGQ1CoXSpuI/arcgis/rest/services/GISForWomen/FeatureServer/4", { infoTemplate: new InfoTemplate("Attributes", "${*}"), visible: false });
+            map.addLayer(workedGis);
             map.addLayer(privateSector);
-            map.addLayer(noneProfitSector);
+            map.addLayer(nonProfitSector);
             map.addLayer(governmentSector);
-            map.addLayer(educationSector);
-            workedGIS.show();
-            privateSector.show();
-            noneProfitSector.show();
-            governmentSector.show();
-            educationSector.show();
+            map.addLayer(educationSector);      
+                      
+            //layer functionality
+            on(dom.byId("educationSector"), "change", function (value) {
+                if (value.target.checked) {
+                    //map.addLayer(educationSector);
+                    educationSector.show();
+                } else {
+                    educationSector.hide();
+                }
+            });
+            on(dom.byId("governmentSector"), "change", function (value) {
+                if (value.target.checked) {
+                   // map.addLayer(governmentSector);
+                    governmentSector.show();
+                } else {
+                    governmentSector.hide();
+                }
+            });
+            on(dom.byId("nonProfitSector"), "change", function (value) {
+                if (value.target.checked) {
+                   // map.addLayer(nonProfitSector);
+                    nonProfitSector.show();
+                } else {
+                    nonProfitSector.hide();
+                }
+            });
+            on(dom.byId("privateSector"), "change", function (value) {
+                if (value.target.checked) {
+                   // map.addLayer(privateSector);
+                    privateSector.show();
+                } else {
+                    privateSector.hide();
+                }
+            });
+            on(dom.byId("workedGis"), "change", function (value) {
+                if (value.target.checked) {
+                   // map.addLayer(workedGis);
+                    workedGis.show();
+                } else {
+                    workedGis.hide();
+                }
+            });
         },
         createLegend: function () {
             var map = this.map;
@@ -139,6 +177,15 @@ function (
                 $(this).toggleClass('legendClose');
                 }); // end click
             
+        },
+        print: function () {
+            var map = this.map;
+            var printer = new Print({
+                map: map,
+                url: "http://servicesbeta4.esri.com/arcgis/rest/services/Utilities/ExportWebMap/GPServer/Export Web Map Task"
+            }, dom.byId("print"));
+
+            printer.startup();
         },
     });
 });

@@ -77,16 +77,16 @@ background-image: -webkit-linear-gradient(top, #000000 0%, #A46535 100%);
 background-image: linear-gradient(to bottom, #000000 0%, #A46535 100%);
 }
 
+#layersBackground {
+    background-color:silver;
+    border-radius:8px;
+}
+
 #geocoder {
     position:absolute;
     top:17px;
     left:50%;
-    z-index:9999999;
-
-}
-
-div.esriGeocoderResults {
-    z-index:99999999 !important;
+    z-index:999;
 }
 
 #basemapGalleryContainer {
@@ -101,8 +101,20 @@ div.esriGeocoderResults {
     
 }
 
-.layerContent {
-    margin-bottom:10px;
+.layerContent tr {
+    height:70px;
+    cursor:pointer;
+}
+
+.layerContent tr:hover {
+    background-color:#A46535;
+    border-radius:20px;    
+}
+#homeButton {
+    position:absolute;
+    z-index:999;
+    left:19px;
+    top:100px;
 }
 
 #basemapInnerContainer {
@@ -114,31 +126,58 @@ div.esriGeocoderResults {
   position:absolute;
   bottom:0;
   width: 100%;
-  padding-bottom:2%;
+  padding-bottom:5%;
   z-index: 100;
 }
 #legendOpen {
-    border-radius:5px;
-    background-color:silver;
+    /*background: url("images/open.png") no-repeat scroll 68px 10px #414142;*/
+    background-color:gray;
   color: #ececec;
   cursor: pointer;
-  float: left;
   font-size: 26px;
-  margin: -2px 0 0 10%;
+  margin: -2px 0 0 18%;
   padding: 0 15px 2px;
   text-decoration: none;
-  width: 63px;
+  width: 78px;
+  border-radius:8px;
 }
+
+#legendOpen:after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 40px;
+    width: 0%;
+    height: 85%;
+    background-color: rgba(255,255,255,0.4);
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+    border-radius:8px;
+}
+
+#legendOpen:hover:after {
+    width: 55%;
+    background-color: rgba(255,255,255,0);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
 #legendDiv {
-  background:#414142;
+  background-color:white;
   width:200px;
   height: 500px;
-  
+  border-radius:5px;
   margin: 0;
   padding: 30px 0;
 }
 #legendDropDown .legendClose {
-  background-image: url(images/close.png);
+  /*background-image: url(images/close.png);*/
 }
 #legendDropDown #legendDashboard {
   display: none;

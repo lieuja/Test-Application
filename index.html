@@ -7,46 +7,50 @@
     <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/claro/claro.css" />
     <link rel="stylesheet" type="text/css" href="css/styleSheet.css" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    
 </head>
 <body class="claro">
+    <div id="geocoder"></div> 
     <div id="site" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false">
+        
         <div id="banner" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, gutters:false, region:'top'">
             <div id="bannerWrapper">
                 <div id="logo" class="oneline"><img src="images/earthLogo.png"/></div>
                 <div id="bannerTitle"class="oneline">ArcGIS Application</div> 
-                <div id="geocoder"></div>               
+                              
                     <i class="fa fa-filter fa-2x"></i>
-                    <i id="print"class="fa fa-print fa-2x"></i>
+                    <div id="print"class="fa fa-print fa-2x"></div>
                     <i id="changeBasemap" class="fa fa-th fa-2x"></i>
             </div>
             
         </div>
         <div id="leftPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, gutters:false, region:'leading'">
             <div id="layerController">
-                <table>
-                    <thead>GIS for Women</thead>
-                    <tr class="layerContent">
-                        <td><input type="checkbox" id="educationSector"></td>
-                        <td>Women in the Education Sector</td>
-                    </tr>
-                    <tr class="layerContent">
-                        <td><input type="checkbox" id="govermentSector"></td>
-                        <td>Women in the Government Sector</td>
-                    </tr>
-                    <tr class="layerContent">
-                        <td><input type="checkbox" id="nonProfitSector"></td>
-                        <td>Women in the Non Profit Sector</td>
-                    </tr>
-                    <tr class="layerContent">
-                        <td><input type="checkbox" id="privateSector"></td>
-                        <td>Women in the Private Sector</td>
-                    </tr>
-                    <tr class="layerContent">
-                        <td><input type="checkbox" id="workedGis"></td>
-                        <td>Female Students and Women who Worked in GIS</td>
-                    </tr>
-                </table>
+                <div id="layersBackground">
+                    <table class="layerContent">
+                        <thead>GIS for Women</thead>
+                        <tr>
+                            <td><input type="checkbox" id="educationSector"></td>
+                            <td>Women in the Education Sector</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="governmentSector"></td>
+                            <td>Women in the Government Sector</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="nonProfitSector"></td>
+                            <td>Women in the Non Profit Sector</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="privateSector"></td>
+                            <td>Women in the Private Sector</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="workedGis"></td>
+                            <td>Female Students and Women who Worked in GIS</td>
+                        </tr>
+                    </table>
+                </div>
                 <!--<div>
                     <input type="checkbox" id="educationSector"> - Women in the Education Sector
                 </div>
@@ -77,12 +81,14 @@
         </div>
         <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, gutters:false, region:'center'">
             <div id="mapDiv">
+                
                 <!-- basemap gallery -->
                 <div id="basemapGalleryContainer" style="display:none;">
-                    <div id="basemapInnerContainer">
+                    <div id="basemapInnerContainer">                        
                         <div id="basemapGallery"></div>
                     </div>
                 </div>
+                <div id="homeButton"></div>
             </div> 
             
         </div>
@@ -103,7 +109,7 @@
             ]
         };
     </script>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src="http://js.arcgis.com/3.9/"></script>
     <script type="text/javascript">
